@@ -1,0 +1,44 @@
+---
+config:
+  remote_tmp_dir: /tmp
+  local_tmp_dir: /tmp
+  archive_type: 'gz'
+
+store:
+  - name: 'mystore'
+    type: 'smb'
+    host: '192.168.1.100'
+    share: 'Documents'
+    path: 'Backups'
+    user: 'myuser'
+    password: 'MyPassword'
+    port: 139
+
+jobs:
+  - name: 'mysite'
+    tasks:
+      - name: 'mysite.com'
+        type: 'dir'
+        target_list:
+          - /var/www/mysite
+      - name: 'copy nginx'
+        type: 'dir'
+        target_list:
+          - /etc/nginx/conf.d/mysite.conf
+      - name: 'mysite db'
+        type: 'mysql'
+        user: root
+        password: myswtrongpass
+        host: 127.0.0.1
+        port: 3360
+        target_list: 
+          - wpmysitedb
+  - name: 'komalapa.ru'
+
+servers:
+  - name: 'mysite.com'
+    user: myuser
+    key: '/home/myuser/.ssh/id_rsa'
+    jobs:
+      - 'mysite'
+
