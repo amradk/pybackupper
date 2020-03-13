@@ -132,3 +132,4 @@ bin/
 lib64
 pyvenv.cfg
 src/conf.yaml
+conf.yaml

@@ -1,5 +1,8 @@
 from smb.SMBConnection import SMBConnection
 from smb.smb_structs import *
+from storage import Storage
+import socket
+import datetime
 
 class SmbStorage(Storage):
     def __init__(self, name, host, share, path, user='', password='', port=139):
@@ -48,6 +51,5 @@ class SmbStorage(Storage):
         data = open(file,'rb')
         file_name = file.split('/')
         file_name = file_name[-1]
-        print('FileName: ', file_name)
         self.smbcon.storeFile(self.share, self.path + '/' + dir_name + '/' + date_str + '/' + file_name, data)
         data.close()

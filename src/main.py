@@ -8,6 +8,7 @@ from storage import Storage
 from mysqldumptask import MySQLDumpTask
 from filetask import FileTask
 from smbstorage import SmbStorage
+from job import Job
 
 class LocalFsStorage(Storage):
     def __init__(self, name, path):

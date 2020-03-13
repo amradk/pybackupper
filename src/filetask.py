@@ -1,13 +1,17 @@
 from task import Task
 
+# task to make a backup for files and directories
 class FileTask(Task):
     def __init__(self, name, targets, settings):
         super().__init__(name, targets, settings)
-    
+
+    # set command to make archives from files and dir
     def set_archive_command(self):
         if self.settings.archive_type == 'gz':
             self.archive_command = 'tar -czf'
 
+    # build a list of command for further execution
+    # mostly to make archives
     def build_commands(self):
         self.set_archive_command()
         self.artifacts = []
@@ -25,6 +29,7 @@ class FileTask(Task):
             r = self.connection.sudo(c)
             self.results.append(r) 
 
+    # clean the temporary directory
     def remote_clean(self):
         for a in self.artifacts:
             self.connection.sudo('rm -rf ' + self.settings.remote_tmp_dir + '/' + a)

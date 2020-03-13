@@ -1,4 +1,4 @@
-from task import *
+from task import Task
 
 class Job():
     def __init__(self, name, tasks=[]):
