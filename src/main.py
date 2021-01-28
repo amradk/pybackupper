@@ -8,6 +8,7 @@ from storage import Storage
 from mysqldumptask import MySQLDumpTask
 from filetask import FileTask
 from smbstorage import SmbStorage
+from localstorage import LocalStorage
 from job import Job
 
 class LocalFsStorage(Storage):
@@ -25,7 +26,10 @@ def main():
     print(config)
 
     settings = Settings(config['config']['remote_tmp_dir'], config['config']['remote_tmp_dir'], config['config']['archive_type'], True)
-    store = SmbStorage(config['store'][0]['name'], config['store'][0]['host'], config['store'][0]['share'], config['store'][0]['path'], config['store'][0]['user'], config['store'][0]['password'])
+    if config['store'][0]['type'] == 'localstore':
+        store = LocalStorage(config['store'][0]['name'], config['store'][0]['path'])
+    if config['store'][0]['type'] == 'smb':
+        store = SmbStorage(config['store'][0]['name'], config['store'][0]['host'], config['store'][0]['share'], config['store'][0]['path'], config['store'][0]['user'], config['store'][0]['password'])
     for s in config['servers']:
         servers[s['name']] = Server(s['name'], s['user'], password='', key=s['key'])
         for j in config['jobs']:

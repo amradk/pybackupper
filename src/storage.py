@@ -9,5 +9,5 @@ class Storage():
         #self.password = ''
         #self.url = ''
 
-    def put(self, file):
+    def put(self, dir_name, file):
         raise NotImplementedError
